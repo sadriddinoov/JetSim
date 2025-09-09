@@ -22,7 +22,7 @@ body {
 }
 
 .container {
-  max-width: 1300px;
+  max-width: 1250px;
   padding-left: 20px;
   padding-right: 20px;
   margin: 0 auto;
@@ -67,4 +67,8 @@ img {
 a {
   text-decoration: none;
   margin: 0;
+}
+
+.min-h-screen {
+  min-height: 100vh;
 }

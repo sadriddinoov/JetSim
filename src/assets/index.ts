@@ -31,6 +31,7 @@ import whatsapp from './whatsap.svg'
 import whitelogo from './whitelogo.svg'
 import x from './x.svg'
 import yt from "./yt.svg"
+import arrow from './arrow.svg'
 
 export const ASSETS = {
     appstore,
@@ -65,5 +66,6 @@ export const ASSETS = {
     whatsapp,
     whitelogo,
     x,
-    yt
+    yt,
+    arrow
 }
