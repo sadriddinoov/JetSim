@@ -32,6 +32,8 @@ import whitelogo from './whitelogo.svg'
 import x from './x.svg'
 import yt from "./yt.svg"
 import arrow from './arrow.svg'
+import share from './share.svg'
+import qr from './qr.svg'
 
 export const ASSETS = {
     appstore,
@@ -67,5 +69,7 @@ export const ASSETS = {
     whitelogo,
     x,
     yt,
-    arrow
+    arrow,
+    qr,
+    share
 }

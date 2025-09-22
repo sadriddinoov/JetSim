@@ -8,5 +8,6 @@ export const APP_ROUTES = {
     OFERTA: "/oferta",
     USLOVIYA: "/usloviya",
     RULE: "/rule",
-    PAYMENT: "/payment"
+    PAYMENT: "/payment",
+    PROFILE: "/profile"
 }

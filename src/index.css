@@ -1,13 +1,14 @@
+/* @import "tailwindcss"; */
+
 html {
   scroll-behavior: smooth;
   height: 100%;
-  overflow-x: hidden;
 }
 
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-weight: 500;
 }
 
@@ -16,7 +17,7 @@ body {
   padding: 0;
   font-size: 16px;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 .container {
@@ -30,7 +31,7 @@ body {
   .container {
     max-width: 725px;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 20px; 
   }
 }
 
@@ -46,7 +47,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
   margin: 0;
   padding: 0;
 }
@@ -65,8 +67,13 @@ img {
 a {
   text-decoration: none;
   margin: 0;
+  color: #000;
 }
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+input {
+  margin: 0;
 }

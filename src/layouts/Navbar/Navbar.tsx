@@ -5,10 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { APP_ROUTES } from "../../router/path";
 import "./Navbar.css";
 import ModalLayout from "../Modal/Modal";
+import { useCart } from "../../context/CartContext";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { cartCount } = useCart(); 
   const { i18n, t } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -89,10 +91,15 @@ const Navbar = () => {
             {isAuthenticated && (
               <div className="header-btn">
                 <p className="header-text">{t("nav.korzina")}</p>
-                <div className="header-span">12</div>
+                <div className="header-span">{cartCount}</div>
               </div>
             )}
-            {window.location.pathname !== APP_ROUTES.AUTH && (
+            {isAuthenticated && (
+              <a href={APP_ROUTES.PROFILE} className="header-btn">
+                <p className="header-text">{t("nav.cabinet")}</p>
+              </a>
+            )}
+            {!isAuthenticated && (
               <div onClick={handleOpenModal} className="header-btn">
                 <p className="header-text">{t("nav.login")}</p>
               </div>
@@ -143,7 +150,7 @@ const Navbar = () => {
                     {isAuthenticated && (
                       <div className="header-btn">
                         <p className="header-text">{t("nav.korzina")}</p>
-                        <div className="header-span">12</div>
+                        <div className="header-span">{cartCount}</div>
                       </div>
                     )}
                     <div className="header-btn" onClick={handleOpenModal}>
