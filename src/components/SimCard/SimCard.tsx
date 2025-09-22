@@ -187,7 +187,9 @@ const SimCard: React.FC<SimCardProps> = ({
             <div className="plan-info">
               <p>{t("sims.set")}</p> <h3>{plan.network}</h3>
             </div>
-            <a href="#">{t(`sims.${plan.status}`)}</a>
+              <a href="#">
+              {t(`sims.${plan.status}`)}
+              </a>
           </div>
         ))}
       </div>
