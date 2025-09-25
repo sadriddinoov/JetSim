@@ -92,7 +92,15 @@ const SimCard: React.FC<SimCardProps> = ({
                 ))}
               </div>
             </div>
-            <a href="#">{t(`sims.${plan.status}`)}</a>
+              <div className="plan-wrapp">
+              <div className="plan-img-wrap">
+                <img className="country-1" src={ASSETS.country1} alt="" />
+                <img className="country-2" src={ASSETS.country2} alt="" />
+                <img className="country-3" src={ASSETS.country3} alt="" />
+                <img className="country-4" src={ASSETS.country4} alt="" />
+              </div>
+              <a href="#">{t(`sims.${plan.status}`)}</a>
+            </div>
 
             <div className="my-qr">
               <div className="my-qr1">
@@ -143,16 +151,20 @@ const SimCard: React.FC<SimCardProps> = ({
             <div className="plan-info">
               <p>{t("sims.check")} </p>
               <div className="history-wrapper">
-                <div className="history-btn">
-                  {t("sims.download")}
-                </div>
+                <div className="history-btn">{t("sims.download")}</div>
 
-                 <div className="history-btn">
-                  {t("sims.view")}
-                </div>
+                <div className="history-btn">{t("sims.view")}</div>
               </div>
             </div>
-            <a href="#">{t(`sims.${plan.status}`)}</a>
+            <div className="plan-wrapp">
+              <div className="plan-img-wrap">
+                <img className="country-1" src={ASSETS.country1} alt="" />
+                <img className="country-2" src={ASSETS.country2} alt="" />
+                <img className="country-3" src={ASSETS.country3} alt="" />
+                <img className="country-4" src={ASSETS.country4} alt="" />
+              </div>
+              <a href="#">{t(`sims.${plan.status}`)}</a>
+            </div>
           </div>
         ))}
       </div>
@@ -187,9 +199,15 @@ const SimCard: React.FC<SimCardProps> = ({
             <div className="plan-info">
               <p>{t("sims.set")}</p> <h3>{plan.network}</h3>
             </div>
-              <a href="#">
-              {t(`sims.${plan.status}`)}
-              </a>
+            <div className="plan-wrapp">
+              <div className="plan-img-wrap">
+                <img className="country-1" src={ASSETS.country1} alt="" />
+                <img className="country-2" src={ASSETS.country2} alt="" />
+                <img className="country-3" src={ASSETS.country3} alt="" />
+                <img className="country-4" src={ASSETS.country4} alt="" />
+              </div>
+              <a href="#">{t(`sims.${plan.status}`)}</a>
+            </div>
           </div>
         ))}
       </div>

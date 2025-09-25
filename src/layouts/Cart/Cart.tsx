@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { APP_ROUTES } from "../../router/path";
+import { ASSETS } from "../../assets";
 
 export const CartRender = () => {
   const { t } = useTranslation();
@@ -44,9 +45,15 @@ export const CartRender = () => {
                   {t("sims.set")} {item.plan.network}
                 </p>
               </div>
-              <a className="cart-detail" href="#">
-                {t(`sims.${item.plan.status}`)}
-              </a>
+              <div className="plan-wrapp">
+                <div className="plan-img-wrap">
+                  <img className="country-1" src={ASSETS.country1} alt="" />
+                  <img className="country-2" src={ASSETS.country2} alt="" />
+                  <img className="country-3" src={ASSETS.country3} alt="" />
+                  <img className="country-4" src={ASSETS.country4} alt="" />
+                </div>
+                <a className="plan-img-btn" href="#">{t(`sims.${item.plan.status}`)}</a>
+              </div>
               <div className="plan-item-w">
                 <div className="plan-item-h">
                   <h3>{t(`sims.${item.plan.type}`)}</h3>
@@ -182,7 +189,8 @@ export const CartRender = () => {
                   </p>
 
                   <div className="promokod-wrap">
-                    <input className="promokod-input"
+                    <input
+                      className="promokod-input"
                       type="text"
                       name="kupon"
                       placeholder={t("profile.payment.code")}
@@ -201,10 +209,8 @@ export const CartRender = () => {
             </div>
 
             <div className="accept">
-                <input type="checkbox" name="agree" id="" />
-                <p className="accept-text">
-                    {t("profile.payment.okey")}
-                </p>
+              <input type="checkbox" name="agree" id="" />
+              <p className="accept-text">{t("profile.payment.okey")}</p>
             </div>
 
             <button className="modal-accept" type="submit">
