@@ -60,7 +60,7 @@ const SimCard: React.FC<SimCardProps> = ({
           <div key={index} className="plan-item">
             <div className="my-together">
               <div>
-                <h1 className="my-name">{t(`${country}`)}</h1>
+                <h1 className="my-name">{country}</h1>
                 <div className="plan-info">
                   <p>{t("sims.tarif")}</p> <h3>{t(`sims.${plan.type}`)}</h3>
                 </div>
@@ -127,7 +127,7 @@ const SimCard: React.FC<SimCardProps> = ({
           <div key={index} className="plan-item">
             <div className="history-together">
               <div className="flag">{flag}</div>
-              <div className="country-name">{t(`${country}`)}</div>
+              <div className="country-name">{country}</div>
             </div>
             <div className="plan-info">
               <p>{t("sims.trafic")} </p> <h3>{plan.traffic}</h3>
@@ -141,7 +141,7 @@ const SimCard: React.FC<SimCardProps> = ({
             <div className="plan-info">
               <p>{t("sims.set")}</p>
               {plan.network.map((net, idx) => (
-                <h3 key={idx}>{net}</h3>
+                <h3 key={idx}>{" "} {net}</h3>
               ))}
             </div>
             <div className="plan-info">
@@ -175,7 +175,7 @@ const SimCard: React.FC<SimCardProps> = ({
     <div className="country-card">
       <div className="country-wrapper">
         <div className="flag">{flag}</div>
-        <div className="country-name">{t(`sims.${country}`)}</div>
+        <div className="country-name">{country}</div>
       </div>
       <div className="plans">
         {plans?.map((plan, index) => (

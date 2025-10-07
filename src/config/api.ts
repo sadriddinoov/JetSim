@@ -3,8 +3,10 @@ import axios from "axios";
 import { APP_ROUTES } from "../router/path";
 import i18n from "../i18n";
 
+export const url = import.meta.env.VITE_API_URL
+
 export const $api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: url
 });
 
 $api.interceptors.response.use(

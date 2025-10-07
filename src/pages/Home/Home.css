@@ -25,6 +25,13 @@
   color: #fff;
 }
 
+.country-img {
+  width: 25px;
+  height: 25px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
 .title {
   font-weight: 800;
   font-size: 44px;
@@ -157,6 +164,11 @@
     font-size: 12px;
     width: 35%;
     text-align: center;
+  }
+  .country-img {
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
   }
 }
 

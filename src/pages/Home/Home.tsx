@@ -1,15 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Navbar from "../../layouts/Navbar/Navbar";
 import Bottom from "../../layouts/Bottom/Bottom";
 import SimCard from "../../components/SimCard/SimCard";
-import { MockSIms } from "../../data/sims";
+import { useCustomGet } from "../../hooks/useCustomGet";
+import endpoints from "../../services/endpoints";
+import i18n from "../../i18n";
 import "./Home.css";
+import { url } from "../../config/api";
+
+export type RegionResponse = {
+  status: number;
+  data: Region[];
+};
+
+export type Region = {
+  id: number;
+  name_ru: string;
+  name_en: string;
+  image: string;
+  status: string;
+  category: any[];
+  created_at: string;
+};
+
+type Country = {
+  id: number;
+  name: string;
+  flag: string;
+  plans: {
+    type: string;
+    traffic: string;
+    cost: string;
+    network: string[];
+    status: string;
+  }[];
+};
+
+type Category = {
+  id: number;
+  name: string;
+  icon: string;
+  countries: Country[];
+};
+
+const defaultCountries: Country[] = [
+  {
+    id: 1,
+    name: i18n.language === "ru" ? "Турция" : "Turkey",
+    flag: "🇹🇷",
+    plans: [
+      { type: "economy", traffic: "20 000 MB", cost: "30 days", network: ["4G", "5G"], status: "details" },
+      { type: "standard", traffic: "20 000 MB", cost: "30 days", network: ["4G", "5G"], status: "details" },
+      { type: "turbo", traffic: "20 000 MB", cost: "30 days", network: ["4G", "5G"], status: "details" },
+    ],
+  },
+];
+
+const createCategories = (regions: Region[]): Category[] => {
+  return regions.map((region) => ({
+    id: region.id,
+    name: i18n.language === "ru" ? region.name_ru : region.name_en,
+    icon: region.image,
+    countries: defaultCountries,
+  }));
+};
 
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("global");
+  const [activeCategory, setActiveCategory] = useState("");
+
+  const { data: regionsData } = useCustomGet({
+    key: "regions",
+    endpoint: endpoints.getregions,
+    enabled: true,
+  });
+
+  useEffect(() => {
+    if (regionsData?.data?.length > 0 && !activeCategory) {
+      const firstRegion = regionsData.data[0];
+      setActiveCategory(i18n.language === "ru" ? firstRegion.name_ru : firstRegion.name_en);
+    }
+  }, [regionsData]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -20,18 +93,18 @@ const Home: React.FC = () => {
     setSearchTerm("");
   };
 
-  const categories = MockSIms[0].categories;
+  const categories: Category[] = regionsData ? createCategories(regionsData.data) : [];
 
   const filteredCategories = categories
-    .filter((category) => category.name === activeCategory)
+    .filter((category) => !activeCategory || category.name === activeCategory)
     .map((category) => ({
       ...category,
       countries: category.countries.filter(
         (country) =>
-          t(`sims.${country.name}`)
+          (i18n.language === "ru" ? country.name : t(`sims.${country.name}`))
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
-          t(`sims.${category.name}`)
+          (i18n.language === "ru" ? category.name : t(`sims.${category.name}`))
             .toLowerCase()
             .includes(searchTerm.toLowerCase())
       ),
@@ -48,7 +121,7 @@ const Home: React.FC = () => {
           <p className="subtitle">{t("sims.subtitle2")}</p>
           <input
             type="text"
-            placeholder={t(`sims.search_placeholder`)}
+            placeholder={t("sims.search_placeholder")}
             value={searchTerm}
             onChange={handleSearch}
             className="search-input"
@@ -64,7 +137,7 @@ const Home: React.FC = () => {
                     : "category-button"
                 }
               >
-                {t(`sims.${category.name}`)} {category.icon}
+                {category.name} <img className="country-img" src={`${url}${category.icon}`} alt="" />
               </button>
             ))}
           </div>
