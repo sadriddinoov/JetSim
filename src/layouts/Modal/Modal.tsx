@@ -110,7 +110,7 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({ isOpen, onClose }) => {
         navigate(APP_ROUTES.HOME);
         onClose();
       }, 1500);
-      setSuccess("Вход успешен")
+      setSuccess("Вход успешен");
     },
     onError: (err: any) => {
       setError(err?.response?.data?.message || "Ошибка при входе");
@@ -119,7 +119,7 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({ isOpen, onClose }) => {
 
   const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(""); 
+    setError("");
     if (email.includes("@") && password.length >= 4) {
       register({
         endpoint: "/auth/register",
@@ -135,7 +135,7 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({ isOpen, onClose }) => {
 
   const handleOtpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(""); 
+    setError("");
     if (confirmCode.length > 0) {
       confirmEmail({
         endpoint: "/auth/confirm-email",
@@ -198,7 +198,11 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({ isOpen, onClose }) => {
                 <button
                   className="modal-accept"
                   type="submit"
-                  disabled={!email.includes("@") || password.length < 4 || isRegisterPending}
+                  disabled={
+                    !email.includes("@") ||
+                    password.length < 4 ||
+                    isRegisterPending
+                  }
                 >
                   {isRegisterPending ? "Регистрация..." : t("modal.next")}
                 </button>

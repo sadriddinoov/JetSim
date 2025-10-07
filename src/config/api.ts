@@ -4,7 +4,7 @@ import { APP_ROUTES } from "../router/path";
 import i18n from "../i18n";
 
 export const $api = axios.create({
-  baseURL: "https://api.jetsim.ru",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 $api.interceptors.response.use(
