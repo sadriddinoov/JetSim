@@ -50,9 +50,27 @@ const defaultCountries: Country[] = [
     name: i18n.language === "ru" ? "Турция" : "Turkey",
     flag: "🇹🇷",
     plans: [
-      { type: "economy", traffic: "20 000 MB", cost: "30 days", network: ["4G", "5G"], status: "details" },
-      { type: "standard", traffic: "20 000 MB", cost: "30 days", network: ["4G", "5G"], status: "details" },
-      { type: "turbo", traffic: "20 000 MB", cost: "30 days", network: ["4G", "5G"], status: "details" },
+      {
+        type: "economy",
+        traffic: "20 000 MB",
+        cost: "30 days",
+        network: ["4G", "5G"],
+        status: "details",
+      },
+      {
+        type: "standard",
+        traffic: "20 000 MB",
+        cost: "30 days",
+        network: ["4G", "5G"],
+        status: "details",
+      },
+      {
+        type: "turbo",
+        traffic: "20 000 MB",
+        cost: "30 days",
+        network: ["4G", "5G"],
+        status: "details",
+      },
     ],
   },
 ];
@@ -70,6 +88,7 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
+  const [id, setId] = useState(null);
 
   const { data: regionsData } = useCustomGet({
     key: "regions",
@@ -80,7 +99,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (regionsData?.data?.length > 0 && !activeCategory) {
       const firstRegion = regionsData.data[0];
-      setActiveCategory(i18n.language === "ru" ? firstRegion.name_ru : firstRegion.name_en);
+      setActiveCategory(
+        i18n.language === "ru" ? firstRegion.name_ru : firstRegion.name_en
+      );
     }
   }, [regionsData]);
 
@@ -93,7 +114,23 @@ const Home: React.FC = () => {
     setSearchTerm("");
   };
 
-  const categories: Category[] = regionsData ? createCategories(regionsData.data) : [];
+  const categories: Category[] = regionsData
+    ? createCategories(regionsData.data)
+    : [];
+
+  const { data } = useCustomGet({
+    key: ["tariffs"],
+    endpoint: endpoints.tariffs,
+  });
+
+  const { data: tariffsRegion } = useCustomGet({
+    key: ["tariffsRegion", id],
+    endpoint: endpoints.tarrifsById,
+    params: { category_id: id },
+    enabled: !!id,
+  });
+
+  console.log(tariffsRegion);
 
   const filteredCategories = categories
     .filter((category) => !activeCategory || category.name === activeCategory)
@@ -127,31 +164,37 @@ const Home: React.FC = () => {
             className="search-input"
           />
           <div className="category-buttons">
-            {categories.map((category) => (
+            {data?.data?.map((category: any) => (
               <button
                 key={category.id}
-                onClick={() => handleCategoryClick(category.name)}
+                onClick={() => {
+                  handleCategoryClick(category.name);
+                  setId(category.id);
+                }}
                 className={
                   activeCategory === category.name
                     ? "category-button active"
                     : "category-button"
                 }
               >
-                {category.name} <img className="country-img" src={`${url}${category.icon}`} alt="" />
+                {category.name}{" "}
+                <img
+                  className="country-img"
+                  src={`${url}${category.icon}`}
+                  alt=""
+                />
               </button>
             ))}
           </div>
-          {filteredCategories.map((category) => (
+          {tariffsRegion?.data?.map((category: any, ind: any) => (
             <div key={category.id} className="category-section">
               <div className="card-grid">
-                {category.countries.map((country) => (
-                  <SimCard
-                    key={country.id}
-                    flag={country.flag}
-                    country={country.name}
-                    plans={country.plans}
-                  />
-                ))}
+                <SimCard
+                  key={ind}
+                  flag={category.image}
+                  country={category.name}
+                  plans={category?.tariffs}
+                />
               </div>
             </div>
           ))}

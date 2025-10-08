@@ -65,7 +65,7 @@ const SimCard: React.FC<SimCardProps> = ({
                   <p>{t("sims.tarif")}</p> <h3>{t(`sims.${plan.type}`)}</h3>
                 </div>
               </div>
-              <div className="my-flag">{flag}</div>
+              <div className="my-flag">{`${}`}</div>
             </div>
 
             <div className="my-info">

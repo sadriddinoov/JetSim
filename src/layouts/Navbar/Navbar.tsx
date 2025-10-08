@@ -6,11 +6,12 @@ import { APP_ROUTES } from "../../router/path";
 import "./Navbar.css";
 import ModalLayout from "../Modal/Modal";
 import { useCart } from "../../context/CartContext";
+import { removeToken, setToken } from "../../config/api";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { cartCount } = useCart(); 
+  const { cartCount } = useCart();
   const { i18n, t } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -19,7 +20,8 @@ const Navbar: React.FC = () => {
     { code: "en", label: "En" },
   ];
 
-  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
+  const currentLang =
+    languages.find((l) => l.code === i18n.language) || languages[0];
 
   const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(event.target.value);
@@ -53,7 +55,9 @@ const Navbar: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const isAuthenticated = localStorage.getItem("token");
+
+  console.log(isAuthenticated, "User authentication status");
 
   return (
     <header className="header">
@@ -99,7 +103,12 @@ const Navbar: React.FC = () => {
                 <p className="header-text">{t("nav.cabinet")}</p>
               </a>
             )}
-            {!isAuthenticated && (
+
+            {isAuthenticated ? (
+              <div onClick={removeToken} className="header-btn">
+                <p className="header-text">{t("nav.exit")}</p>
+              </div>
+            ) : (
               <div onClick={handleOpenModal} className="header-btn">
                 <p className="header-text">{t("nav.login")}</p>
               </div>
@@ -174,10 +183,7 @@ const Navbar: React.FC = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          <ModalLayout
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-          />
+          <ModalLayout isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
       </div>
     </header>
